@@ -3,21 +3,25 @@ import Header from './components/Header'
 import Content from './components/Content'
 import Total from './components/Total'
 
-const StatisticLine =(props) =>{
-  return <p>{props.text} {props.value}</p>
+const StatisticLine = (props) => {
+  return <tr><td>{props.text}</td><td>{props.value}</td></tr>
 }
 const Statistics = (props) => {
-  if(props.getAll()>0){
+  if (props.getAll() > 0) {
     return (<div>
       <Header course="statics" />
-      <StatisticLine text="good" value={props.good} />
-      <StatisticLine text="neutral" value={props.neutral} />
-      <StatisticLine text="bad" value={props.bad} />
-      <StatisticLine text="all" value={props.getAll()} />
-      <StatisticLine text="average" value={props.getAvg()} />
-      <StatisticLine text="positive" value={`${props.getPos()}%`} />
+      <table>
+        <tbody>
+          <StatisticLine text="good" value={props.good} />
+          <StatisticLine text="neutral" value={props.neutral} />
+          <StatisticLine text="bad" value={props.bad} />
+          <StatisticLine text="all" value={props.getAll()} />
+          <StatisticLine text="average" value={props.getAvg()} />
+          <StatisticLine text="positive" value={`${props.getPos()}%`} />
+        </tbody>
+      </table>
     </div>)
-  }else{
+  } else {
     return (<p>No feedback given</p>)
   }
 }
