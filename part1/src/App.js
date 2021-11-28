@@ -4,15 +4,20 @@ import Content from './components/Content'
 import Total from './components/Total'
 
 const Statistics = (props) => {
-  return (<div>
-    <Header course="statics" />
-    <p>good {props.good}</p>
-    <p>neutral {props.neutral}</p>
-    <p>bad {props.bad} </p>
-    <p>all {props.getAll()}</p>
-    <p>average {props.getAvg()}</p>
-    <p>positive {props.getPos()}%</p>
-  </div>)
+  if(props.getAll()>0){
+    return (<div>
+      <Header course="statics" />
+      <p>good {props.good}</p>
+      <p>neutral {props.neutral}</p>
+      <p>bad {props.bad} </p>
+      <p>all {props.getAll()}</p>
+      <p>average {props.getAvg()}</p>
+      <p>positive {props.getPos()}%</p>
+    </div>)
+  }else{
+    return (<p>No feedback given</p>)
+  }
+
 }
 
 const App = () => {
