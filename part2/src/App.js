@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([])
+  const [filterPersons, setFilterPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [newFilter, setNewFilter] = useState('')
 
   const addPerson = (e) => {
     e.preventDefault()
@@ -16,8 +18,10 @@ const App = () => {
       number: newNumber
     }
     setPersons(persons.concat(newPerson))
+    setFilterPersons(persons.concat(newPerson))
     setNewName('')
     setNewNumber('')
+    setNewFilter('')
   }
 
   const changeName = (e) => {
@@ -26,10 +30,19 @@ const App = () => {
   const changeNumber = (e) => {
     setNewNumber(e.target.value)
   }
+  const changeFilter = (e) =>{
+    setNewFilter(e.target.value)
+    // const filterArr = persons.filter(item => item.name.indexOf(e.target.value) !== -1)
+    const filterArr = persons.filter(item => item.name.includes(e.target.value))
+    setFilterPersons(filterArr) 
+  }
 
   return (
     <div>
       <h2>Phonebook</h2>
+        <div>
+          filter shown with: <input value={newFilter} onChange={changeFilter} />
+        </div>  
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={changeName} />
@@ -43,7 +56,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <>
-        {persons.map(item=><p key={item.name}>{item.name} {item.number}</p>)}
+        {filterPersons.map(item=><p key={item.name}>{item.name} {item.number}</p>)}
       </>
     </div>
   )
