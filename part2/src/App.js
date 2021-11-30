@@ -6,6 +6,10 @@ const App = () => {
 
   const addPerson = (e) => {
     e.preventDefault()
+    if (persons.filter(item => item.name === newName).length) {
+      alert(`${newName} has already added`)
+      return false
+    }
     const newPerson = {
       name: newName,
     }
