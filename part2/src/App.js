@@ -20,13 +20,16 @@ const App = () => {
     //     setPersons(response.data)
     //     // setFilterPersons(response.data)
     //   })
+    getAll()
+  }, [])
+  // console.log('render', persons.length, 'notes')
+
+  const getAll = () =>{
     request.getAll().then(personList => {
       console.log(personList)
       setPersons(personList)
     })
-  }, [])
-  // console.log('render', persons.length, 'notes')
-
+  }
   const addPerson = (e) => {
     e.preventDefault()
     if (persons.filter(item => item.name === newName).length) {
@@ -66,6 +69,13 @@ const App = () => {
   //   setFilterPersons(filterArr) 
   // }
 
+  const deletePerson = (id) =>{
+    console.log(id)
+    request.deleteItem(id).then(data=>{
+      getAll()
+    })
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -75,7 +85,7 @@ const App = () => {
         <h3>Add a new</h3>
         <PersonForm newName={newName} changeName={changeName} newNumber={newNumber}  changeNumber={changeNumber} addPerson={addPerson}/>
       <h2>Numbers</h2>
-      <Persons filterPersons={persons}/>
+      <Persons filterPersons={persons} deletePerson={deletePerson}/>
     </div>
   )
 }
