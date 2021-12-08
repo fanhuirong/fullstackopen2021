@@ -32,18 +32,22 @@ const App = () => {
   }
   const addPerson = (e) => {
     e.preventDefault()
-    if (persons.filter(item => item.name === newName).length) {
-      alert(`${newName} has already added`)
-      return false
-    }
     const newPerson = {
       name: newName,
       number: newNumber
     }
+    if (persons.filter(item => item.name === newName).length) {
+      // alert(`${newName} has already added`)
+      const id = persons.find(item=>item.name === newName).id
+      request.update(id, newPerson).then(data => {
+        getAll()
+      })
+    }else{
+      request.create(newPerson).then(data => {
+        setPersons(persons.concat(data))
+      })
+    }
 
-    request.create(newPerson).then(data=>{
-      setPersons(persons.concat(data))
-    })
 
       // axios
       //   .post('http://localhost:3001/persons', newPerson)
