@@ -12,17 +12,8 @@ const App = () => {
   const [newFilter, setNewFilter] = useState('')
 
   useEffect(() => {
-    // console.log('effect')
-    // axios
-    //   .get('http://localhost:3001/persons')
-    //   .then(response => {
-    //     // console.log('promise fulfilled')
-    //     setPersons(response.data)
-    //     // setFilterPersons(response.data)
-    //   })
     getAll()
   }, [])
-  // console.log('render', persons.length, 'notes')
 
   const getAll = () =>{
     request.getAll().then(personList => {
@@ -48,30 +39,15 @@ const App = () => {
       })
     }
 
-
-      // axios
-      //   .post('http://localhost:3001/persons', newPerson)
-      //   .then(response => {
-      //     setPersons(persons.concat(response.data))
-      //     // setFilterPersons(persons.concat(response.data))
-      //     setNewName('')
-      //     setNewNumber('')
-      //     setNewFilter('')
-      //   })
   }
 
   const changeName = (e) => {
     setNewName(e.target.value)
   }
+  
   const changeNumber = (e) => {
     setNewNumber(e.target.value)
   }
-  // const changeFilter = (e) =>{
-  //   setNewFilter(e.target.value)
-  //   // const filterArr = persons.filter(item => item.name.indexOf(e.target.value) !== -1)
-  //   const filterArr = persons.filter(item => item.name.includes(e.target.value))
-  //   setFilterPersons(filterArr) 
-  // }
 
   const deletePerson = (id) =>{
     console.log(id)
