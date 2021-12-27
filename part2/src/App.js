@@ -27,24 +27,24 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    if (persons.filter(item => item.name === newName).length) {
-      // alert(`${newName} has already added`)
-      const id = persons.find(item=>item.name === newName).id
-      request.update(id, newPerson).then(data => {
-        getAll()
-      })
-    }else{
+    // if (persons.filter(item => item.name === newName).length) {
+    //   // alert(`${newName} has already added`)
+    //   const id = persons.find(item=>item.name === newName).id
+    //   request.update(id, newPerson).then(data => {
+    //     getAll()
+    //   })
+    // }else{
       request.create(newPerson).then(data => {
         setPersons(persons.concat(data))
       })
-    }
+    // }
 
   }
 
   const changeName = (e) => {
     setNewName(e.target.value)
   }
-  
+
   const changeNumber = (e) => {
     setNewNumber(e.target.value)
   }
@@ -58,7 +58,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h2 style={{background:'red'}}>Phonebook</h2>
         {/* <div>
           <Filter newFilter={newFilter} changeFilter={changeFilter}/>
         </div>   */}
