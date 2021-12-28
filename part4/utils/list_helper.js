@@ -6,6 +6,13 @@ const dummy = (blogs) => {
   }
 };
 
+const totalLikes = (list) =>{
+  return list.reduce((sum, blog)=>{
+    return sum + blog.likes;
+  }, 0)
+}
+
 module.exports = {
   dummy,
+  totalLikes
 };
