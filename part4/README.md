@@ -16,3 +16,15 @@
 3. 数据库schema 的 models文件拆出
 4. controller拆出来，进行数据库的接口操作
 5. 从index里拆出app.js
+
+## 测试
+`npm install --save-dev jest`
+```
+{
+"test": "jest --verbose"
+}
+
+"jest": {
+   "testEnvironment": "node"
+ }
+```
