@@ -28,3 +28,26 @@
    "testEnvironment": "node"
  }
 ```
+
+```
+  "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "NODE_ENV=test jest --verbose --runInBand"
+  },
+```
+
+之前的不能在win工作，增加cross-env
+
+`npm install --save-dev cross-env`
+
+```
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
+  },
+```
+
+api测试
+`npm install --save-dev supertest`
