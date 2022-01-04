@@ -49,6 +49,32 @@ test('a specific note is within the returned notes', async () => {
     'monster'
   )
 })
+
+test('a valid note can be added', async () => {
+  const newNote = {
+    "title": "oh------",
+    "author": "sehun",
+    "url": "ttt",
+    "likes": 111
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newNote)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const response = await api.get('/api/blogs')
+
+  const contents = response.body.map(r => r.title)
+
+  expect(response.body).toHaveLength(initialNotes.length + 1)
+  expect(contents).toContain(
+    'oh------'
+  )
+})
+
+
 afterAll(() => {
   mongoose.connection.close()
 })
