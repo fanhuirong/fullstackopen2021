@@ -26,6 +26,7 @@ blogsRouter.get('/', async (request, response) => {
 //       response.status(200).json(result)
 //     })
 // })
+// step 4.10
 // async await
 blogsRouter.post('/', async (request, response, next) => {
   const blog = new Blog(request.body)
