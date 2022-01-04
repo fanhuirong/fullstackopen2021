@@ -24,13 +24,14 @@ beforeEach(async () => {
   await Promise.all(promiseArray)
 })
 
+// step 4.8
 test('blogs are returned as json', async () => {
   await api
     .get('/api/blogs')
     .expect(200)
     .expect('Content-Type', /application\/json/)
 })
-
+// step 4.8
 test('all notes are returned', async () => {
   const response = await api.get('/api/blogs')
 

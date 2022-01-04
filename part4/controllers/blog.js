@@ -9,6 +9,7 @@ const Blog = require('../models/blogs')
 //   })
 // })
 
+// step 4.8
 // async await 版本
 blogsRouter.get('/', async (request, response) => {
   const notes = await Blog.find({})
