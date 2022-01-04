@@ -2,28 +2,16 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
+const helper = require('./test_helper')
 
 const Blog = require('../models/blogs')
-const initialNotes = [{
-  title: "heheooo",
-  author: "kunkun",
-  url: "xxxx",
-  likes: 222
-  },
-  {
-    title: "monster",
-    author: "hunhun",
-    url: "xxxx",
-    likes: 11
-  },
-]
 
 // 清空数据库，确保每次测试数据一样
 beforeEach(async () => {
   await Blog.deleteMany({})
-  let blogObject = new Blog(initialNotes[0])
+  let blogObject = new Blog(helper.initialNotes[0])
   await blogObject.save()
-  blogObject = new Blog(initialNotes[1])
+  blogObject = new Blog(helper.initialNotes[1])
   await blogObject.save()
 })
 
@@ -37,7 +25,7 @@ test('blogs are returned as json', async () => {
 test('all notes are returned', async () => {
   const response = await api.get('/api/blogs')
 
-  expect(response.body).toHaveLength(initialNotes.length)
+  expect(response.body).toHaveLength(helper.initialNotes.length)
 })
 
 test('a specific note is within the returned notes', async () => {
@@ -64,11 +52,11 @@ test('a valid note can be added', async () => {
     .expect(200)
     .expect('Content-Type', /application\/json/)
 
-  const response = await api.get('/api/blogs')
+  // const response = await api.get('/api/blogs')
+  const blogAtEnd = await helper.blogsInDb();
+  const contents = blogAtEnd.map(r => r.title)
 
-  const contents = response.body.map(r => r.title)
-
-  expect(response.body).toHaveLength(initialNotes.length + 1)
+  expect(blogAtEnd).toHaveLength(helper.initialNotes.length + 1)
   expect(contents).toContain(
     'oh------'
   )

@@ -11,17 +11,24 @@ const Blog = require('../models/blogs')
 // async await 版本
 blogsRouter.get('/', async (request, response) => {
   const notes = await Blog.find({})
-    response.json(notes)
+  response.json(notes)
 })
 
-blogsRouter.post('/', (request, response) => {
+// blogsRouter.post('/', (request, response) => {
+//   const blog = new Blog(request.body)
+
+//   blog
+//     .save()
+//     .then(result => {
+//       response.status(200).json(result)
+//     })
+// })
+// async await
+blogsRouter.post('/', async (request, response) => {
   const blog = new Blog(request.body)
 
-  blog
-    .save()
-    .then(result => {
-      response.status(200).json(result)
-    })
+  const savedBlog = await blog.save();
+  response.status(200).json(savedBlog)
 })
 
 module.exports = blogsRouter
