@@ -51,3 +51,6 @@
 
 api测试
 `npm install --save-dev supertest`
+
+消除try catch
+`npm install express-async-errors`

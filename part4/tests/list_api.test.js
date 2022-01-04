@@ -7,12 +7,21 @@ const helper = require('./test_helper')
 const Blog = require('../models/blogs')
 
 // 清空数据库，确保每次测试数据一样
+// beforeEach(async () => {
+//   await Blog.deleteMany({})
+//   let blogObject = new Blog(helper.initialNotes[0])
+//   await blogObject.save()
+//   blogObject = new Blog(helper.initialNotes[1])
+//   await blogObject.save()
+// })
+// refactor with promise
 beforeEach(async () => {
   await Blog.deleteMany({})
-  let blogObject = new Blog(helper.initialNotes[0])
-  await blogObject.save()
-  blogObject = new Blog(helper.initialNotes[1])
-  await blogObject.save()
+
+  const blogObject = helper.initialNotes
+    .map(blog => new Blog(blog))
+  const promiseArray = blogObject.map(blog => blog.save())
+  await Promise.all(promiseArray)
 })
 
 test('blogs are returned as json', async () => {
