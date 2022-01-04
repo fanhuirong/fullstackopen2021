@@ -62,6 +62,38 @@ test('a valid note can be added', async () => {
   )
 })
 
+test('a specific blog can be viewed', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+
+  const blogToView = blogsAtStart[0]
+  const resultNote = await api
+    .get(`/api/blogs/${blogToView._id}`)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const processedBlogToView = JSON.parse(JSON.stringify(blogToView))
+  expect(resultNote.body).toEqual(processedBlogToView)
+})
+
+test('a blog can be deleted', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToDelete = blogsAtStart[0]
+
+  await api
+    .delete(`/api/blogs/${blogToDelete._id}`)
+    .expect(204)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  expect(blogsAtEnd).toHaveLength(
+    helper.initialNotes.length - 1
+  )
+
+  const title = blogsAtEnd.map(r => r.title)
+
+  expect(title).not.toContain(blogToDelete.title)
+})
+
 
 afterAll(() => {
   mongoose.connection.close()
