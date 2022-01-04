@@ -104,6 +104,13 @@ test('a blog can be deleted', async () => {
 
   expect(title).not.toContain(blogToDelete.title)
 })
+// step 4.9
+test("blog has a unique id named 'id'", async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blog = blogsAtStart[0]
+
+  expect(blog.id).toBeDefined();
+});
 
 
 afterAll(() => {
