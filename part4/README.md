@@ -57,3 +57,6 @@ api测试
 
 生成密码的hash值
 `npm install bcrypt`
+
+验证用户名唯一性
+`npm install mongoose-unique-validator`
