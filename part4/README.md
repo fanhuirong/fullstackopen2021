@@ -54,3 +54,6 @@ api测试
 
 消除try catch
 `npm install express-async-errors`
+
+生成密码的hash值
+`npm install bcrypt`
