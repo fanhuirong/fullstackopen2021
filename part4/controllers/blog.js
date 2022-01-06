@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const blogsRouter = require('express').Router()
+const middleware = require("../utils/middleware");
 
 // 引入数据库Schema的model
 const Blog = require('../models/blogs')
@@ -32,9 +33,11 @@ blogsRouter.get('/', async (request, response) => {
 // })
 // step 4.10
 // async await
-blogsRouter.post('/', async (request, response, next) => {
+blogsRouter.post('/', middleware.userExtractor, async (request, response, next) => {
   // const blog = new Blog(request.body)
   const body = request.body
+  const user = request.user;
+
   // add token 
   // step 4.19
   // const token = getTokenFrom(request)
@@ -46,7 +49,8 @@ blogsRouter.post('/', async (request, response, next) => {
       error: 'token missing or invalid'
     })
   }
-  const user = await User.findById(decodedToken.id)
+  // step 4.19
+  // const user = await User.findById(decodedToken.id)
   // const user = await User.findById(body.userId)
   const blog = new Blog({
     title: body.title,
@@ -99,7 +103,7 @@ blogsRouter.get('/:id', async(request, response, next) => {
 //     })
 //     .catch((error) => next(error));
 // })
-blogsRouter.delete('/:id', async(request, response, next) => {
+blogsRouter.delete('/:id', middleware.userExtractor, async (request, response, next) => {
   // try {
   //   await Blog.findByIdAndRemove(request.params.id)
   //   response.status(204).end()
@@ -108,7 +112,8 @@ blogsRouter.delete('/:id', async(request, response, next) => {
   // }
   // step 4.21
   const blog = await Blog.findById(request.params.id);
-
+  // step 4.22
+  const user = request.user;
   const decodedToken = jwt.verify(request.token, process.env.SECRET);
 
   if (!request.token || !decodedToken.id) {
@@ -117,7 +122,7 @@ blogsRouter.delete('/:id', async(request, response, next) => {
     });
   }
 
-  const user = await User.findById(decodedToken.id);
+  // const user = await User.findById(decodedToken.id);
   console.log('blog',blog )
   console.log('user',user)
   if (blog?.user.toString() === user?.id.toString()) {
