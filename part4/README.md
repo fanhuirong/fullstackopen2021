@@ -60,3 +60,6 @@ api测试
 
 验证用户名唯一性
 `npm install mongoose-unique-validator`
+
+生成token
+`npm install jsonwebtoken`

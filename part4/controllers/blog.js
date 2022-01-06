@@ -1,7 +1,17 @@
+const jwt = require('jsonwebtoken')
 const blogsRouter = require('express').Router()
+
 // 引入数据库Schema的model
 const Blog = require('../models/blogs')
 const User = require('../models/users')
+
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
 
 // getAll
 // blogsRouter.get('/', (request, response) => {
@@ -32,7 +42,16 @@ blogsRouter.get('/', async (request, response) => {
 blogsRouter.post('/', async (request, response, next) => {
   // const blog = new Blog(request.body)
   const body = request.body
-  const user = await User.findById(body.userId)
+  // add token 
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+  const user = await User.findById(decodedToken.id)
+  // const user = await User.findById(body.userId)
   const blog = new Blog({
     title: body.title,
     author: body.author,
