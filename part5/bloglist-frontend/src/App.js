@@ -47,6 +47,10 @@ const App = () => {
     }
   }
 
+  const logout = () => {
+    window.localStorage.removeItem('loggedUser')
+  }
+
   const handleAdd = async (event) => {
     event.preventDefault()
     try {
@@ -130,18 +134,25 @@ const App = () => {
       </form>
   )
 
+  const blogList = () =>(
+    <div>
+      <div>user name: {user?.name} <button onClick={()=>logout()}>logout</button></div>
+      <div>blog list</div>
+      {blogs.map(item=> {
+        return <div>{item.title}</div>
+      })}
+    </div>
+  )
+
   return (
     <div>   
       <h2>blogs</h2>
       {user === null && loginForm()}
       {user !== null && blogForm()}
 
-      <div>user name: {user?.name}</div>
-      <div>blog list</div>
-      {blogs.map(item=> {
-        return <div>{item.title}</div>
-      })}
+      {user !== null && blogList()}
     </div>
+      
   )
 }
 
