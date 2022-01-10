@@ -16,9 +16,16 @@ const User = require('../models/users')
 
 // step 4.8
 // async await 版本
-blogsRouter.get('/', async (request, response) => {
+blogsRouter.get('/', middleware.userExtractor, async (request, response) => {
   const notes = await Blog.find({})
-  response.json(notes)
+  const user = request.user;
+  const decodedToken = jwt.verify(request.token, process.env.SECRET);
+  if (!request.token || !decodedToken.id) {
+    return response.status(401).json({
+      error: 'token missing or invalid'
+    })
+  }
+  return response.json(notes)
 })
 
 // Add 
