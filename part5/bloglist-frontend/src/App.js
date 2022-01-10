@@ -51,6 +51,7 @@ const App = () => {
     window.localStorage.removeItem('loggedUser')
   }
 
+  // step 5.3
   const handleAdd = async (event) => {
     event.preventDefault()
     try {
@@ -92,6 +93,7 @@ const App = () => {
         <button type="submit">login</button>
       </form>
   )
+  // step 5.3
   const blogForm= ()=> (
      <form onSubmit={handleAdd}>
         <div>
