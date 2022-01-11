@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import BlogForm from './components/blogForm'
@@ -71,7 +70,11 @@ const App = () => {
   const handleAdd = async (formData) => {
     try {
       const blog = await blogService.createBlog(formData)
-
+      if(blog){
+        blogService.getAll().then(blogs =>
+          setBlogs( blogs )
+        )  
+      }
     } catch (exception) {
       console.log('Wrong credentials')
     }
