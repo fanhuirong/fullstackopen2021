@@ -106,7 +106,7 @@ const App = () => {
       <div>user name: {user?.name} <button onClick={()=>logout()}>logout</button></div>
       <div>blog list</div>
       {blogs.map(item=> {
-        return <div>{item.title}</div>
+        return <div key={item.id}>{item.title}</div>
       })}
     </div>
   )
