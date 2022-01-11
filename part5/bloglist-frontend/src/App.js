@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import BlogForm from './components/blogForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -9,10 +11,6 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
-  const [likes, setLikes] = useState(0)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -52,19 +50,28 @@ const App = () => {
   }
 
   // step 5.3
-  const handleAdd = async (event) => {
-    event.preventDefault()
+  // const handleAdd = async (event) => {
+  //   event.preventDefault()
+  //   try {
+  //     const blog = await blogService.createBlog({
+  //       title,
+  //       author,
+  //       url,
+  //       likes
+  //     })
+  //     setTitle('')
+  //     setUrl('')
+  //     setLikes(0)
+  //     setAuthor('')
+  //   } catch (exception) {
+  //     console.log('Wrong credentials')
+  //   }
+  // }
+
+  const handleAdd = async (formData) => {
     try {
-      const blog = await blogService.createBlog({
-        title,
-        author,
-        url,
-        likes
-      })
-      setTitle('')
-      setUrl('')
-      setLikes(0)
-      setAuthor('')
+      const blog = await blogService.createBlog(formData)
+
     } catch (exception) {
       console.log('Wrong credentials')
     }
@@ -93,48 +100,6 @@ const App = () => {
         <button type="submit">login</button>
       </form>
   )
-  // step 5.3
-  const blogForm= ()=> (
-     <form onSubmit={handleAdd}>
-        <div>
-          title
-            <input
-            type="text"
-            value={title}
-            name="Title"
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-        <div>
-          author
-            <input
-            type="text"
-            value={author}
-            name="Author"
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
-          url
-            <input
-            type="text"
-            value={url}
-            name="Url"
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-        <div>
-          likes
-            <input
-            type="number"
-            value={likes}
-            name="Likes"
-            onChange={({ target }) => setLikes(target.value)}
-          />
-        </div>
-        <button type="submit">add</button>
-      </form>
-  )
 
   const blogList = () =>(
     <div>
@@ -150,7 +115,9 @@ const App = () => {
     <div>   
       <h2>blogs</h2>
       {user === null && loginForm()}
-      {user !== null && blogForm()}
+      {user !== null && <Togglable buttonLabel="create new blog">
+        <BlogForm onSubmit={handleAdd}/>
+      </Togglable>}
 
       {user !== null && blogList()}
     </div>
