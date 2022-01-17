@@ -38,4 +38,26 @@ describe('Blog app', function() {
       cy.contains('Wrong credentials')
     })
   })
+
+  // step 5.19
+  describe('When logged in', function() {
+    beforeEach(function() {
+      // log in user here
+      cy.contains('login').click()
+      cy.get('#username').type(user.username)
+      cy.get('#password').type(user.password)
+      cy.get('#login-btn').click()
+      cy.contains(`${user.name}`)
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('new blog').click()
+      cy.get('#title').type('a blog created by cypress')
+      cy.get('#author').type('cypress')
+      cy.get('#url').type('cypress')
+      cy.get('#likes').type('100')
+      cy.contains('add').click()
+      cy.contains('a blog created by cypress')
+    })
+  })
 })
