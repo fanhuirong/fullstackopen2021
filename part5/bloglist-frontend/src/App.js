@@ -10,6 +10,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [showWrong, setShowWrong] = useState(false)
 
 
   useEffect(() => {
@@ -40,7 +41,9 @@ const App = () => {
       ) 
       setUsername('')
       setPassword('')
+      setShowWrong(false)
     } catch (exception) {
+      setShowWrong(true)
       console.log('Wrong credentials')
     }
   }
@@ -86,6 +89,7 @@ const App = () => {
         <div>
           username
             <input
+            id="username"
             type="text"
             value={username}
             name="Username"
@@ -95,13 +99,14 @@ const App = () => {
         <div>
           password
             <input
+            id="password"
             type="password"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit">login</button>
+        <button id="login-btn" type="submit">login</button>
       </form>
   )
 
@@ -119,6 +124,7 @@ const App = () => {
     <div>   
       <h2>blogs</h2>
       {user === null && loginForm()}
+      { showWrong && <p>Wrong credentials</p>}
       {user !== null && <Togglable buttonLabel="create new blog">
         <BlogForm onSubmit={handleAdd}/>
       </Togglable>}
