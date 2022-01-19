@@ -6,12 +6,8 @@ import reducer from './reducer'
 const store = createStore(reducer)
 
 const App = () => {
-  const good = () => {
-    store.dispatch({
-      type: 'GOOD'
-    })
-  }
 
+  // step 6.1 6.2
   const clickBtn = (type)=>{
     store.dispatch({
       type
