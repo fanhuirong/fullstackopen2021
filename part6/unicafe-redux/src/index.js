@@ -12,15 +12,21 @@ const App = () => {
     })
   }
 
+  const clickBtn = (type)=>{
+    store.dispatch({
+      type
+    })
+  }
+
   return (
     <div>
-      <button onClick={good}>good</button> 
-      <button>ok</button> 
-      <button>bad</button>
-      <button>reset stats</button>
+      <button onClick={()=>clickBtn('GOOD')}>good</button> 
+      <button onClick={()=>clickBtn('OK')}>ok</button> 
+      <button onClick={()=>clickBtn('BAD')}>bad</button>
+      <button onClick={()=>clickBtn('ZERO')}>reset stats</button>
       <div>good {store.getState().good}</div>
-      <div>ok</div>
-      <div>bad</div>
+      <div>ok {store.getState().ok}</div>
+      <div>bad {store.getState().bad}</div>
     </div>
   )
 }
