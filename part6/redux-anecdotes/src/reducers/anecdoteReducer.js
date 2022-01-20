@@ -17,6 +17,7 @@ const asObject = (anecdote) => {
   }
 }
 
+// step 6.6
 export const voteAnec = (id) =>{
   return {
     type: 'VOTE',
