@@ -12,7 +12,8 @@ const AnecdoteForm = () => {
     const content = event.target.note.value
     event.target.note.value = ''
     // step 6.14
-    const NewAnecdote = await AnecdotesService.createNew(content)
+    // const NewAnecdote = await AnecdotesService.createNew(content)
+    // step 6.16
     dispatch(add(content))
     
     // step 6.11
