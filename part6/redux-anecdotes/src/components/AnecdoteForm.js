@@ -17,8 +17,11 @@ const AnecdoteForm = () => {
     dispatch(add(content))
     
     // step 6.11
-    dispatch(showNotification(`New anecdote was added: ${content}`));
-    setTimeout(() => dispatch(hideNotification()), 5000);
+    // dispatch(showNotification(`New anecdote was added: ${content}`));
+    // setTimeout(() => dispatch(hideNotification()), 5000);
+
+    // step 6.18
+    dispatch(showNotification(`New anecdote was added: ${content}`, 10))
   }
 
   return (
