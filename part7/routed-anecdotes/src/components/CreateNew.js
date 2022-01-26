@@ -9,10 +9,10 @@ const CreateNew = (props) => {
   // const [author, setAuthor] = useState('')
   // const [info, setInfo] = useState('')
 
-  // step 7.5
-  const content = useField('text')
-  const author = useField('text')
-  const info = useField('text')
+  // step 7.6
+  const {onReset: resetContent, ...content} = useField('text')
+  const {onReset: resetAuthor, ...author} = useField('text')
+  const {onReset: resetInfo, ...info} = useField('text')
 
   const handleSubmit = (e) => {
     console.log('sub')
@@ -28,9 +28,9 @@ const CreateNew = (props) => {
 
   const handleReset = () =>{
     console.log('reset')
-    content.onReset();
-    author.onReset();
-    info.onReset();
+    resetInfo();
+    resetAuthor();
+    resetContent()
   }
 
   return (
