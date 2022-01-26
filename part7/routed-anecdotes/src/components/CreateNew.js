@@ -9,11 +9,13 @@ const CreateNew = (props) => {
   // const [author, setAuthor] = useState('')
   // const [info, setInfo] = useState('')
 
+  // step 7.5
   const content = useField('text')
   const author = useField('text')
   const info = useField('text')
 
   const handleSubmit = (e) => {
+    console.log('sub')
     e.preventDefault()
     props.addNew({
       content: content.value,
@@ -22,6 +24,13 @@ const CreateNew = (props) => {
       votes: 0
     })
     history.push("/");
+  }
+
+  const handleReset = () =>{
+    console.log('reset')
+    content.onReset();
+    author.onReset();
+    info.onReset();
   }
 
   return (
@@ -43,7 +52,8 @@ const CreateNew = (props) => {
           url for more info
           <input name='info' {...info} />
         </div>
-        <button>create</button>
+        <button type='submit'>create</button>
+        <button type="button" onClick={handleReset}>reset</button>
       </form>
     </div>
   )
