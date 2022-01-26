@@ -1,7 +1,9 @@
 
 import React, { useState } from 'react'
+import { useHistory } from "react-router-dom"
 
 const CreateNew = (props) => {
+  const history = useHistory()
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
@@ -15,6 +17,7 @@ const CreateNew = (props) => {
       info,
       votes: 0
     })
+    history.push("/");
   }
 
   return (

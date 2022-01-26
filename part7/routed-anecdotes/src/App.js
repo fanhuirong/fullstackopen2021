@@ -12,7 +12,8 @@ import Anecdote from './components/Anecdote'
 
 const App = () => {
 
-
+  const [notification, setNotification] = useState(null);
+  
   const [anecdotes, setAnecdotes] = useState([
     {
       content: 'If it hurts, do it more often',
@@ -38,11 +39,22 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(
+      `A new anecdote ${anecdote.content} is succesfully created.`
+    )
+    setTimeout(() => setNotification(null), 10000)
   }
 
   return (
       <div>
         <Menu />
+        {notification && (
+          <div
+            style={{ border: "1px dashed tomato", margin: "5px", padding: "5px" }}
+          >
+            {notification}
+          </div>
+        )}
         <Switch>
           <Route path="/about"> 
             <About /> 
