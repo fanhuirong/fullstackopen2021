@@ -16,7 +16,7 @@ query {
 `
 const App = () => {
 
-  const result = useQuery(ALL_AUTHORS)
+  const queryAuthors = useQuery(ALL_AUTHORS)
   const [page, setPage] = useState('authors')
 
   return (
@@ -26,9 +26,9 @@ const App = () => {
         <button onClick={() => setPage('books')}>books</button>
         <button onClick={() => setPage('add')}>add book</button>
       </div>
-     {!(result.loading ) && <Authors authors={result?.data?.allAuthors} show={page === 'authors'} />}
+     {!(queryAuthors.loading ) && <Authors authors={queryAuthors?.data?.allAuthors} show={page === 'authors'} />}
 
-      <Books show={page === 'books'} />
+      <Books show={page === 'books'} queryAuthors={queryAuthors}/>
 
       <NewBook show={page === 'add'} />
     </div>
