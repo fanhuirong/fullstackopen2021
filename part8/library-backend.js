@@ -17,7 +17,7 @@ const typeDefs = gql`
   type Book {
     title: String!
     published: Int!
-    author: Author!
+    author: Int!
     genres: [String!]!
     id: ID!
   }
@@ -53,37 +53,46 @@ const resolvers = {
     authorCount: () => Author.collection.countDocuments(),
     bookCount: () => Book.collection.countDocuments(),
     allBooks: () => Book.find({}),
+    // TODO
     allAuthors: () => Author.find({}),
   },
   Author: {
     // 自定义解析器
-    bookCount: (root) => {
-      return books.filter((b) => b.author === root.name).length;
-    },
+    bookCount: async (root) =>
+      await Book.find({ author: root.id }).countDocuments(),
   },
   Mutation: {
-    addBook: (root, args) => {
-      const book = { ...args, id: uuid() }
-      const currentAuthor = args.author
-      authors = authors.find(item => item.name === currentAuthor) ? [...authors] : authors.concat({   
-          name: currentAuthor,
-          born: null,
-          bookCount: 1,})
-
-      books = books.concat(book)
+    addBook: async (root, args) => {
+      let author = await Author.findOne({ name: args.author })
+      if (!author) {
+        author = new Author({
+          name: args.author,
+          id: uuid(),
+        })
+        await author.save()
+      }
+      let book = new Book({
+        ...args,
+        author: author.id,
+        id: uuid(),
+      })
+      await book.save()
+      book = await book.populate('author').execPopulate()
       return book
     },
 
-    editAuthor: (root, args) => {
-      const author = authors.find(a => a.name === args.name)
-      if(!author){
+    editAuthor: async(root, args) => {
+      const authorExist = await Author.findOne({ name: args.name })
+      if (!authorExist) {
         return null
       }
-
-      const newAuthor = {...author, born: args.born}
-      authors = authors.map(item => item.name === args.name ? newAuthor : item)
-      return newAuthor
-    }
+      const author = await Author.findOneAndUpdate(
+        { name: args.name },
+        { born: args.born },
+        { new: true }
+      )
+      return author
+    },
   }
 }
 
