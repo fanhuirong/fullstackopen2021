@@ -1,3 +1,4 @@
+import {v1 as uuid} from 'uuid'
 import patientsData from '../data/patients';
 import { Patient } from '../type';
 
@@ -15,8 +16,17 @@ const getNonSensitiveEntries = (): Omit<Patient, 'ssn'>[] => {
   }));
 }
 
-const addEntry = () => {
-  return null;
+const addEntry = (name: string, dateOfBirth: string, ssn: string, gender: string, occupation: string) => {
+  const newData = {
+    id: uuid(),
+    name,
+    dateOfBirth,
+    ssn,
+    gender,
+    occupation
+  }
+  patientsData.push(newData)
+  return newData;
 };
 
 export default {
