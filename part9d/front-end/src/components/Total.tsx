@@ -1,10 +1,8 @@
 import React from 'react'
-interface itemModel {
-  name: string;
-  exerciseCount: number
-}
+import CoursePart from '../types'
+
 interface contentModel {
-  data: itemModel[]
+  data: CoursePart[]
 }
 
 const Total = ({data}: contentModel) => {

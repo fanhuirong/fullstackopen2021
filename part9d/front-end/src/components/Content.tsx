@@ -1,20 +1,17 @@
 import React from 'react'
+import CoursePart from '../types'
+import Part from './Part'
 
-interface itemModel {
-  name: string;
-  exerciseCount: number
-}
 interface contentModel {
-  data: itemModel[]
+  data: CoursePart[]
 }
 
 const Content = ({data}: contentModel) => {
   return (
     <div>
-      {data.map((item:itemModel )=>{
-        return (<p key={item.name}>{item.name} {item.exerciseCount}</p>)
-      })}
-
+      {data.map((item:CoursePart )=>
+        <Part key={item.name} part={item}/>
+      )}
     </div>
   )
 }

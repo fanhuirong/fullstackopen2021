@@ -14,6 +14,16 @@ mongoose.connect(MONGODB_URI)
   })
 
 const typeDefs = gql`
+  type User {
+    username: String!
+    favoriteGenre: String!
+    id: ID!
+  }
+
+  type Token {
+    value: String!
+  }
+
   type Book {
     title: String!
     published: Int!
@@ -32,6 +42,7 @@ const typeDefs = gql`
     authorCount: Int!
     allBooks(genre: String): [Book!]!
     allAuthors: [Author!]!
+    me: User
   }
 
   type Mutation {
@@ -45,6 +56,14 @@ const typeDefs = gql`
       name: String!
       born: Int!
     ): Author
+    createUser(
+      username: String!
+      favoriteGenre: String!
+    ): User
+    login(
+      username: String!
+      password: String!
+    ): Token
 }
 `
 
